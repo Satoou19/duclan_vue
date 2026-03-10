@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-lg hover:opacity-90 transition font-semibold;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition;
+  }
+
+  .product-card {
+    @apply bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition;
+  }
+
+  .section-title {
+    @apply text-2xl font-bold text-gray-800 mb-8;
+  }
+}
+
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
   --vt-c-white: #ffffff;

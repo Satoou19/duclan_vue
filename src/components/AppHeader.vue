@@ -92,7 +92,7 @@ const navigateTo = (path: string) => {
   <div class="w-full bg-white border-b border-gray-200">
     <!-- Top Bar -->
     <div class="bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-2">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center text-sm">
+      <div class="px-4 sm:px-6 lg:px-8 flex justify-between items-center text-sm">
         <div>Kính chào quý khách</div>
         <div class="flex gap-6">
           <a href="tel:0283930646" class="hover:opacity-80">Tổng đài: 028.39306464</a>
@@ -103,7 +103,7 @@ const navigateTo = (path: string) => {
     </div>
 
     <!-- Main Header -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 md:py-4">
+    <div class="px-4 sm:px-6 lg:px-8 py-3 md:py-4">
       <div class="flex items-center justify-between gap-2 md:gap-4 mb-3 md:mb-4">
         <!-- Logo -->
         <div class="flex-shrink-0">
@@ -113,9 +113,8 @@ const navigateTo = (path: string) => {
         <!-- Search Bar (hidden on mobile) -->
         <div class="hidden md:flex flex-1 gap-2 mx-4">
           <!-- Danh mục sản phẩm dropdown -->
-          <div class="relative">
+          <div class="relative group">
             <button
-              @click.stop="showCategoryDropdown = !showCategoryDropdown"
               class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition whitespace-nowrap flex items-center gap-2"
             >
               ☰ Danh mục sản phẩm
@@ -123,16 +122,13 @@ const navigateTo = (path: string) => {
 
             <!-- Category Dropdown Menu -->
             <div
-              v-if="showCategoryDropdown"
-              class="absolute left-0 top-full mt-1 w-64 bg-white border border-gray-200 rounded-lg shadow-xl z-50"
-              @click.stop
-              @mouseleave="showCategoryDropdown = false"
+              class="absolute left-0 top-full mt-0 w-64 bg-white border border-gray-200 rounded-lg shadow-xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all"
             >
               <div class="py-2">
                 <div
                   v-for="category in categories"
                   :key="category.id"
-                  class="border-b border-gray-100 last:border-b-0"
+                  class="border-b border-gray-100 last:border-b-0 group/category"
                 >
                   <button
                     @click="toggleCategory(category.id)"
@@ -142,16 +138,16 @@ const navigateTo = (path: string) => {
                     <span class="text-lg">{{ expandedCategories[category.id] ? '−' : '+' }}</span>
                   </button>
 
-                  <!-- Subcategories -->
+                  <!-- Subcategories - show on click or hover -->
                   <div
                     v-if="expandedCategories[category.id]"
-                    class="bg-gray-50 border-t border-gray-100"
+                    class="bg-gray-50 border-t border-gray-100 max-h-96 overflow-y-auto"
                   >
                     <a
                       v-for="(subcat, idx) in category.subcategories"
                       :key="idx"
                       href="#"
-                      class="block px-6 py-2 text-sm text-gray-700 hover:text-blue-600 hover:bg-white transition"
+                      class="block px-6 py-2.5 text-sm text-gray-700 hover:text-blue-600 hover:bg-white transition"
                     >
                       {{ subcat }}
                     </a>
@@ -184,15 +180,15 @@ const navigateTo = (path: string) => {
         </div>
 
         <!-- Right Actions -->
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-3">
           <button
-            class="hidden md:flex items-center gap-2 px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-lg text-sm transition font-semibold"
+            class="hidden md:flex items-center gap-2 px-4 py-2 text-gray-800 bg-white border border-gray-300 hover:bg-blue-500 hover:text-white rounded-lg text-sm transition font-semibold"
           >
             <span>👤</span>
             <span>Tài khoản</span>
           </button>
           <button
-            class="flex items-center gap-2 px-4 py-2 text-gray-800 border-2 border-gray-300 hover:border-blue-500 hover:text-blue-600 rounded-lg text-sm transition relative font-semibold"
+            class="flex items-center gap-2 px-4 py-2 text-gray-800 bg-white border border-gray-300 hover:bg-blue-500 hover:text-white rounded-lg text-sm transition relative font-semibold"
           >
             <span>📄</span>
             <span class="hidden md:inline">In báo giá</span>
@@ -203,7 +199,7 @@ const navigateTo = (path: string) => {
             >
           </button>
           <button
-            class="flex items-center gap-2 px-4 py-2 text-gray-800 border-2 border-gray-300 hover:border-blue-500 hover:text-blue-600 rounded-lg text-sm transition relative font-semibold"
+            class="flex items-center gap-2 px-4 py-2 text-gray-800 bg-white border border-gray-300 hover:bg-blue-500 hover:text-white rounded-lg text-sm transition relative font-semibold"
           >
             <span>🛒</span>
             <span class="hidden md:inline">Giỏ hàng</span>
@@ -244,7 +240,7 @@ const navigateTo = (path: string) => {
 
     <!-- Navigation Bar -->
     <nav class="bg-gray-100 border-t border-gray-200 sticky top-0 z-40">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="px-4 sm:px-6 lg:px-8">
         <div class="hidden md:flex items-center gap-6 py-3 text-sm font-medium text-gray-700">
           <router-link to="/" class="hover:text-blue-600 transition">🏠 Trang chủ</router-link>
           <div class="group relative cursor-pointer">

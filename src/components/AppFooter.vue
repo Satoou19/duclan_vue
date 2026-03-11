@@ -44,8 +44,12 @@
         <div>
           <h3 class="font-bold text-gray-800 mb-4 text-sm">HỖ TRỢ KHÁCH HÀNG</h3>
           <ul class="space-y-2 text-xs text-gray-600">
-            <li><a href="#" class="hover:text-blue-600 transition">Bảng mã lỗi máy photocopy Xerox</a></li>
-            <li><a href="#" class="hover:text-blue-600 transition">Hướng dẫn kết nối máy in HP</a></li>
+            <li>
+              <a href="#" class="hover:text-blue-600 transition">Bảng mã lỗi máy photocopy Xerox</a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-blue-600 transition">Hướng dẫn kết nối máy in HP</a>
+            </li>
             <li><a href="#" class="hover:text-blue-600 transition">Hướng dẫn Cài Scan FTP</a></li>
           </ul>
         </div>
@@ -54,9 +58,15 @@
         <div>
           <h3 class="font-bold text-gray-800 mb-4 text-sm">THÔNG TIN DOANH NGHIỆP</h3>
           <ul class="space-y-2 text-xs text-gray-600">
-            <li><a href="#" class="hover:text-blue-600 transition">Hành trình khám phá Đài Loan</a></li>
-            <li><a href="#" class="hover:text-blue-600 transition">Hành trình khám phá Thái Lan</a></li>
-            <li><a href="#" class="hover:text-blue-600 transition">Đức Lan đồng hành cùng bà con</a></li>
+            <li>
+              <a href="#" class="hover:text-blue-600 transition">Hành trình khám phá Đài Loan</a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-blue-600 transition">Hành trình khám phá Thái Lan</a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-blue-600 transition">Đức Lan đồng hành cùng bà con</a>
+            </li>
             <li><a href="#" class="hover:text-blue-600 transition">Các hoạt động từ thiện</a></li>
           </ul>
         </div>
@@ -103,7 +113,9 @@
       </div>
 
       <!-- Social & Copyright -->
-      <div class="border-t border-gray-300 pt-8 flex flex-col md:flex-row items-center justify-between">
+      <div
+        class="border-t border-gray-300 pt-8 flex flex-col md:flex-row items-center justify-between"
+      >
         <div class="flex gap-6 mb-6 md:mb-0">
           <a href="#" class="text-gray-600 hover:text-blue-600 transition">
             <span class="text-lg">f</span> Facebook
@@ -123,7 +135,9 @@
           <p class="mb-2">© 2003 DUCLAN GROUP</p>
           <p>
             <span class="hover:text-blue-600 transition cursor-pointer">https://duclan.vn</span> |
-            <span class="hover:text-blue-600 transition cursor-pointer">https://mayvanphongduclan.com</span>
+            <span class="hover:text-blue-600 transition cursor-pointer"
+              >https://mayvanphongduclan.com</span
+            >
           </p>
         </div>
       </div>

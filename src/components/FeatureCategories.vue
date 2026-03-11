@@ -1,53 +1,36 @@
 <script setup lang="ts">
 const categories = [
-  {
-    id: 1,
-    title: 'Máy các loại',
-    link: '#',
-  },
-  {
-    id: 2,
-    title: 'Mực - Từ',
-    link: '#',
-  },
-  {
-    id: 3,
-    title: 'Hộp mực - Cụm trống',
-    link: '#',
-  },
-  {
-    id: 4,
-    title: 'Linh kiện',
-    link: '#',
-  },
-  {
-    id: 5,
-    title: 'Chip',
-    link: '#',
-  },
-  {
-    id: 6,
-    title: 'In phun',
-    link: '#',
-  },
+  { id: 1, title: 'Máy các loại', link: 'https://duclan.vn/tim-kiem?k==may&c=3' },
+  { id: 2, title: 'Mực - Từ', link: 'https://duclan.vn/tim-kiem?k==btu,muc,mgi,mci&c=1' },
+  { id: 3, title: 'Hộp mực - Cụm trống', link: 'https://duclan.vn/tim-kiem?k==mct,dct&c=4' },
+  { id: 4, title: 'Linh kiện', link: 'https://duclan.vn/tim-kiem?k==bsy,tro,gmc&c=5' },
+  { id: 5, title: 'Chip', link: 'https://duclan.vn/tim-kiem?k==chi&c=6' },
+  { id: 6, title: 'In phun', link: 'https://duclan.vn/vat-tu-in-phun-4.cat' },
 ]
 </script>
 
 <template>
-  <div class="bg-white py-8 mb-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4">
-        <a
-          v-for="category in categories"
-          :key="category.id"
-          :href="category.link"
-          class="p-4 md:p-6 rounded-lg text-white text-center font-semibold text-xs md:text-sm hover:opacity-90 transition bg-gradient-to-br from-blue-500 to-cyan-500 shadow-md"
-        >
-          {{ category.title }}
-        </a>
-      </div>
+  <div style="background: #f0f0f0; padding: 14px 24px">
+    <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px">
+      <a
+        v-for="cat in categories"
+        :key="cat.id"
+        :href="cat.link"
+        style="
+          background: #1a8fd1;
+          color: white;
+          border-radius: 6px;
+          padding: 16px 8px;
+          font-size: 15px;
+          font-weight: 700;
+          text-align: center;
+          text-decoration: none;
+          display: block;
+        "
+        onmouseover="this.style.background='#1565c0'"
+        onmouseout="this.style.background='#1a8fd1'"
+        >{{ cat.title }}</a
+      >
     </div>
   </div>
 </template>
-
-<style scoped></style>

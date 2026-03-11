@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import Header from '@/components/Header.vue'
-import Footer from '@/components/Footer.vue'
+import Header from '@/components/AppHeader.vue'
+import Footer from '@/components/AppFooter.vue'
 import HeroBanner from '@/components/HeroBanner.vue'
 import FeatureCategories from '@/components/FeatureCategories.vue'
 import ProductCarousel from '@/components/ProductCarousel.vue'

@@ -14,7 +14,7 @@ defineProps<{
 
 const currentIndex = ref(0)
 
-let autoplayInterval: NodeJS.Timeout
+let autoplayInterval: ReturnType<typeof setInterval>
 
 onMounted(() => {
   // Auto-rotate banners every 5 seconds
@@ -41,7 +41,9 @@ const nextSlide = () => {
 </script>
 
 <template>
-  <div class="relative w-full h-64 md:h-96 bg-gradient-to-r from-blue-500 to-cyan-500 overflow-hidden">
+  <div
+    class="relative w-full h-64 md:h-96 bg-gradient-to-r from-blue-500 to-cyan-500 overflow-hidden"
+  >
     <!-- Slides -->
     <div class="relative w-full h-full">
       <div
@@ -54,7 +56,9 @@ const nextSlide = () => {
         <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
           <div class="text-center">
             <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">{{ banner.title }}</h2>
-            <button class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+            <button
+              class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            >
               {{ banner.cta }}
             </button>
           </div>
@@ -85,7 +89,10 @@ const nextSlide = () => {
         :key="index"
         @click="goToSlide(index)"
         class="w-3 h-3 rounded-full transition-all"
-        :class="{ 'bg-white w-8': currentIndex === index, 'bg-white bg-opacity-50': currentIndex !== index }"
+        :class="{
+          'bg-white w-8': currentIndex === index,
+          'bg-white bg-opacity-50': currentIndex !== index,
+        }"
         :aria-label="`Go to slide ${index + 1}`"
       />
     </div>

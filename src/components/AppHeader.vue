@@ -26,7 +26,17 @@ const categories = [
   {
     id: 'vat-tu-photocopy',
     name: 'Vật tư photocopy',
-    subcategories: ['Mực', 'Cụm Từ', 'Cụm Trống', 'Cụm Băng Tải', 'Cụm Sấy', 'Chíp', 'Dây Curoa', 'Lấy Giấy', 'Linh Kiện Khác'],
+    subcategories: [
+      'Mực',
+      'Cụm Từ',
+      'Cụm Trống',
+      'Cụm Băng Tải',
+      'Cụm Sấy',
+      'Chíp',
+      'Dây Curoa',
+      'Lấy Giấy',
+      'Linh Kiện Khác',
+    ],
   },
   {
     id: 'vat-tu-in-laser',
@@ -120,24 +130,34 @@ const navigateTo = (path: string) => {
 
         <!-- Right Actions -->
         <div class="flex items-center gap-3">
-          <button class="hidden md:flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg text-sm transition">
+          <button
+            class="hidden md:flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg text-sm transition"
+          >
             <span>Tài khoản</span>
           </button>
-          <button class="flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg text-sm transition relative">
+          <button
+            class="flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg text-sm transition relative"
+          >
             <span>📄</span>
             <span class="hidden md:inline">In báo giá</span>
-            <span v-if="printCount > 0" class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{{
-              printCount
-            }}</span>
+            <span
+              v-if="printCount > 0"
+              class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+              >{{ printCount }}</span
+            >
           </button>
-          <button class="flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg text-sm transition relative">
+          <button
+            class="flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg text-sm transition relative"
+          >
             <span>🛒</span>
             <span class="hidden md:inline">Giỏ hàng</span>
-            <span v-if="cartCount > 0" class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{{ cartCount }}</span>
+            <span
+              v-if="cartCount > 0"
+              class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+              >{{ cartCount }}</span
+            >
           </button>
-          <button @click="toggleMenu" class="md:hidden p-2 hover:bg-gray-100 rounded-lg">
-            ☰
-          </button>
+          <button @click="toggleMenu" class="md:hidden p-2 hover:bg-gray-100 rounded-lg">☰</button>
         </div>
       </div>
 
@@ -157,7 +177,10 @@ const navigateTo = (path: string) => {
           placeholder="Tìm kiếm..."
           class="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <button @click="handleSearch" class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+        <button
+          @click="handleSearch"
+          class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+        >
           🔍
         </button>
       </div>
@@ -170,16 +193,24 @@ const navigateTo = (path: string) => {
           <router-link to="/" class="hover:text-blue-600 transition">🏠 Trang chủ</router-link>
           <div class="group relative cursor-pointer">
             <button class="py-3 hover:text-blue-600 transition">Sản phẩm</button>
-            <div class="absolute left-0 mt-0 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+            <div
+              class="absolute left-0 mt-0 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all"
+            >
               <a href="#" class="block px-4 py-2 hover:bg-gray-100">Sản phẩm mới</a>
               <a href="#" class="block px-4 py-2 hover:bg-gray-100">Sản phẩm nổi bật</a>
             </div>
           </div>
           <div class="group relative cursor-pointer">
             <button class="py-3 hover:text-blue-600 transition">Thương hiệu</button>
-            <div class="absolute left-0 mt-0 w-96 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all p-4">
+            <div
+              class="absolute left-0 mt-0 w-96 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all p-4"
+            >
               <div class="grid grid-cols-3 gap-3">
-                <div v-for="brand in brands" :key="brand" class="text-center hover:bg-gray-100 p-2 rounded cursor-pointer transition">
+                <div
+                  v-for="brand in brands"
+                  :key="brand"
+                  class="text-center hover:bg-gray-100 p-2 rounded cursor-pointer transition"
+                >
                   {{ brand }}
                 </div>
               </div>
@@ -196,21 +227,38 @@ const navigateTo = (path: string) => {
     </nav>
 
     <!-- Mobile Menu -->
-    <div v-show="isMenuOpen" class="md:hidden bg-white border-t border-gray-200 max-h-96 overflow-y-auto">
+    <div
+      v-show="isMenuOpen"
+      class="md:hidden bg-white border-t border-gray-200 max-h-96 overflow-y-auto"
+    >
       <div class="px-4 py-3 space-y-2 text-sm">
-        <router-link to="/" @click="isMenuOpen = false" class="block py-2 hover:bg-gray-100 rounded px-2 transition">
+        <router-link
+          to="/"
+          @click="isMenuOpen = false"
+          class="block py-2 hover:bg-gray-100 rounded px-2 transition"
+        >
           🏠 Trang chủ
         </router-link>
         <a href="#" class="block py-2 hover:bg-gray-100 rounded px-2 transition">Sản phẩm</a>
         <a href="#" class="block py-2 hover:bg-gray-100 rounded px-2 transition">Thương hiệu</a>
-        <a href="#" class="block py-2 hover:bg-gray-100 rounded px-2 transition">Chính sách bán hàng</a>
-        <a href="#" class="block py-2 hover:bg-gray-100 rounded px-2 transition">Chính sách mua hàng</a>
+        <a href="#" class="block py-2 hover:bg-gray-100 rounded px-2 transition"
+          >Chính sách bán hàng</a
+        >
+        <a href="#" class="block py-2 hover:bg-gray-100 rounded px-2 transition"
+          >Chính sách mua hàng</a
+        >
         <a href="#" class="block py-2 hover:bg-gray-100 rounded px-2 transition">Tin tức</a>
         <a href="#" class="block py-2 hover:bg-gray-100 rounded px-2 transition">Báo giá</a>
-        <router-link to="/lien-he" @click="isMenuOpen = false" class="block py-2 hover:bg-gray-100 rounded px-2 transition">
+        <router-link
+          to="/lien-he"
+          @click="isMenuOpen = false"
+          class="block py-2 hover:bg-gray-100 rounded px-2 transition"
+        >
           Liên hệ
         </router-link>
-        <a href="#" class="block py-2 hover:bg-gray-100 rounded px-2 transition">Đội ngũ kinh doanh</a>
+        <a href="#" class="block py-2 hover:bg-gray-100 rounded px-2 transition"
+          >Đội ngũ kinh doanh</a
+        >
       </div>
     </div>
   </div>

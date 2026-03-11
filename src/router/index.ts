@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '@/pages/Home.vue'
-import Placeholder from '@/pages/Placeholder.vue'
+import Home from '@/pages/HomePage.vue'
+import Placeholder from '@/pages/PlaceholderPage.vue'
 
 const routes = [
   {

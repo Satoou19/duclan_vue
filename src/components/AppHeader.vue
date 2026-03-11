@@ -9,6 +9,8 @@ const printCount = ref(0)
 const searchQuery = ref('')
 const searchType = ref('product')
 const activeCategory = ref<string | null>(null)
+const expandedCategories = ref<{ [key: string]: boolean }>({})
+const showCategoryDropdown = ref(false)
 
 const categories = [
   {
@@ -76,6 +78,10 @@ const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
 }
 
+const toggleCategory = (categoryId: string) => {
+  expandedCategories.value[categoryId] = !expandedCategories.value[categoryId]
+}
+
 const navigateTo = (path: string) => {
   router.push(path)
   isMenuOpen.value = false
@@ -106,6 +112,55 @@ const navigateTo = (path: string) => {
 
         <!-- Search Bar (hidden on mobile) -->
         <div class="hidden md:flex flex-1 gap-2 mx-4">
+          <!-- Danh mục sản phẩm dropdown -->
+          <div class="relative">
+            <button
+              @click.stop="showCategoryDropdown = !showCategoryDropdown"
+              class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition whitespace-nowrap flex items-center gap-2"
+            >
+              ☰ Danh mục sản phẩm
+            </button>
+
+            <!-- Category Dropdown Menu -->
+            <div
+              v-if="showCategoryDropdown"
+              class="absolute left-0 top-full mt-1 w-64 bg-white border border-gray-200 rounded-lg shadow-xl z-50"
+              @click.stop
+              @mouseleave="showCategoryDropdown = false"
+            >
+              <div class="py-2">
+                <div
+                  v-for="category in categories"
+                  :key="category.id"
+                  class="border-b border-gray-100 last:border-b-0"
+                >
+                  <button
+                    @click="toggleCategory(category.id)"
+                    class="w-full flex items-center justify-between px-4 py-3 hover:bg-blue-50 transition text-gray-800 font-semibold text-sm"
+                  >
+                    <span>{{ category.name }}</span>
+                    <span class="text-lg">{{ expandedCategories[category.id] ? '−' : '+' }}</span>
+                  </button>
+
+                  <!-- Subcategories -->
+                  <div
+                    v-if="expandedCategories[category.id]"
+                    class="bg-gray-50 border-t border-gray-100"
+                  >
+                    <a
+                      v-for="(subcat, idx) in category.subcategories"
+                      :key="idx"
+                      href="#"
+                      class="block px-6 py-2 text-sm text-gray-700 hover:text-blue-600 hover:bg-white transition"
+                    >
+                      {{ subcat }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <select
             v-model="searchType"
             class="px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 text-sm"
@@ -129,31 +184,32 @@ const navigateTo = (path: string) => {
         </div>
 
         <!-- Right Actions -->
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2">
           <button
-            class="hidden md:flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg text-sm transition"
+            class="hidden md:flex items-center gap-2 px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-lg text-sm transition font-semibold"
           >
+            <span>👤</span>
             <span>Tài khoản</span>
           </button>
           <button
-            class="flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg text-sm transition relative"
+            class="flex items-center gap-2 px-4 py-2 text-gray-800 border-2 border-gray-300 hover:border-blue-500 hover:text-blue-600 rounded-lg text-sm transition relative font-semibold"
           >
             <span>📄</span>
             <span class="hidden md:inline">In báo giá</span>
             <span
               v-if="printCount > 0"
-              class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+              class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold"
               >{{ printCount }}</span
             >
           </button>
           <button
-            class="flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg text-sm transition relative"
+            class="flex items-center gap-2 px-4 py-2 text-gray-800 border-2 border-gray-300 hover:border-blue-500 hover:text-blue-600 rounded-lg text-sm transition relative font-semibold"
           >
             <span>🛒</span>
             <span class="hidden md:inline">Giỏ hàng</span>
             <span
               v-if="cartCount > 0"
-              class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+              class="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold"
               >{{ cartCount }}</span
             >
           </button>

@@ -4,6 +4,7 @@ import Header from '@/components/AppHeader.vue'
 import Footer from '@/components/AppFooter.vue'
 import HeroBanner from '@/components/HeroBanner.vue'
 import FeatureCategories from '@/components/FeatureCategories.vue'
+import BrandLogos from '@/components/BrandLogos.vue'
 import ProductCarousel from '@/components/ProductCarousel.vue'
 import BlogSection from '@/components/BlogSection.vue'
 
@@ -38,6 +39,9 @@ const banners = [
     <main class="flex-grow">
       <!-- Hero Banner -->
       <HeroBanner :banners="banners" />
+
+      <!-- Brand Logos -->
+      <BrandLogos />
 
       <!-- Feature Categories -->
       <FeatureCategories />

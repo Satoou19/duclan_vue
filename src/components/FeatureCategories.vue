@@ -8,29 +8,17 @@ const categories = [
   { id: 6, title: 'In phun', link: 'https://duclan.vn/vat-tu-in-phun-4.cat' },
 ]
 </script>
-
 <template>
-  <div style="background: #f0f0f0; padding: 14px 24px">
-    <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px">
+  <div class="bg-gray-100 py-4 px-6">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
       <a
         v-for="cat in categories"
         :key="cat.id"
         :href="cat.link"
-        style="
-          background: #1a8fd1;
-          color: white;
-          border-radius: 6px;
-          padding: 16px 8px;
-          font-size: 15px;
-          font-weight: 700;
-          text-align: center;
-          text-decoration: none;
-          display: block;
-        "
-        onmouseover="this.style.background='#1565c0'"
-        onmouseout="this.style.background='#1a8fd1'"
-        >{{ cat.title }}</a
+        class="bg-blue-500 hover:bg-blue-600 text-white font-semibold text-center rounded-md py-3 transition"
       >
+        {{ cat.title }}
+      </a>
     </div>
   </div>
 </template>

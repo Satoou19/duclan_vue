@@ -76,7 +76,7 @@ const blogPosts = [
 
 <template>
   <div class="bg-gray-50 py-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="w-full mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="text-xl font-bold text-gray-800 mb-6">Bài viết trang chủ</h2>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

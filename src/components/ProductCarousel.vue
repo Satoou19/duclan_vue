@@ -82,12 +82,15 @@ const decrement = (id: number) => {
               <button
                 class="flex h-9 w-9 items-center justify-center rounded-full border border-dashed border-white text-white transition hover:bg-white hover:text-[#3b8fbd]"
               >
-                <!-- using print svg in asset folder -->
-                <img
-                  src="/src/assets/print-solid-full.svg"
-                  alt="Print"
-                  class="h-4 w-4 color-white"
-                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                  class="h-4 w-4 fill-current"
+                >
+                  <path
+                    d="M128 0C110.3 0 96 14.3 96 32V64H416V32C416 14.3 401.7 0 384 0H128zM96 96H64C28.7 96 0 124.7 0 160V320c0 35.3 28.7 64 64 64H96v64c0 17.7 14.3 32 32 32H384c17.7 0 32-14.3 32-32V384h32c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H416V96H96zm64 256H352v96H160V352z"
+                  />
+                </svg>
               </button>
 
               <span

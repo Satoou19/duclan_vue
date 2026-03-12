@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/pages/HomePage.vue'
 import Placeholder from '@/pages/PlaceholderPage.vue'
+import ProductCategory from '@/pages/ProductCategoryPage.vue'
 
 const routes = [
   {
@@ -11,7 +12,7 @@ const routes = [
   {
     path: '/san-pham',
     name: 'Products',
-    component: Placeholder,
+    component: ProductCategory,
   },
   {
     path: '/huong-dan-mua-hang',

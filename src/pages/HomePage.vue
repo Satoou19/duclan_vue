@@ -496,8 +496,8 @@ const vatTuInKim = [
       <BrandLogos />
 
       <!-- Product Sections -->
-      <div style="background: white; padding: 20px 0">
-        <div style="max-width: 1200px; margin: 0 auto; padding: 0 16px">
+      <div class="bg-white py-5">
+        <div class="w-full px-2 sm:px-3">
           <ProductCarousel
             title="Máy văn phòng"
             titleLink="https://duclan.vn/may-van-phong-1.cat"

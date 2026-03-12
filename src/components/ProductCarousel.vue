@@ -7,95 +7,159 @@ interface Product {
   code: string
   price: string
   image: string
+  link?: string
 }
 
 defineProps<{
   title: string
+  titleLink?: string
   products: Product[]
+  subTabs?: { name: string; link: string }[]
 }>()
 
+const quantities = ref<{ [key: number]: number }>({})
 const showQuantity = ref<{ [key: number]: boolean }>({})
 
-const toggleQuantity = (id: number) => {
-  showQuantity.value[id] = !showQuantity.value[id]
+const addToCart = (id: number) => {
+  quantities.value[id] = 1
+  showQuantity.value[id] = true
+}
+
+const increment = (id: number) => {
+  quantities.value[id] = (quantities.value[id] || 1) + 1
+}
+
+const decrement = (id: number) => {
+  if ((quantities.value[id] || 1) > 1) {
+    quantities.value[id] = (quantities.value[id] || 1) - 1
+  }
 }
 </script>
 
 <template>
-  <div class="mb-12">
+  <div class="mb-10">
     <!-- Section Title -->
-    <div class="flex items-center justify-between mb-8">
-      <h2 class="text-xl md:text-2xl font-bold text-gray-800">{{ title }}</h2>
-      <div class="flex gap-2">
-        <button class="px-4 py-2 border border-gray-300 rounded-md hover:border-blue-500 hover:text-blue-600 transition text-xs md:text-sm font-medium">
+    <div class="flex items-center justify-between mb-5">
+      <h2 class="text-lg md:text-xl font-bold text-gray-800">
+        <a v-if="titleLink" :href="titleLink" class="hover:text-blue-600 transition">{{ title }}</a>
+        <span v-else>{{ title }}</span>
+      </h2>
+      <div class="flex gap-1.5">
+        <button
+          class="px-3 py-1.5 border border-gray-300 rounded hover:border-blue-500 hover:text-blue-600 transition text-xs font-medium"
+        >
           ◄ Trước
         </button>
-        <button class="px-4 py-2 border border-gray-300 rounded-md hover:border-blue-500 hover:text-blue-600 transition text-xs md:text-sm font-medium">
+        <button
+          class="px-3 py-1.5 border border-gray-300 rounded hover:border-blue-500 hover:text-blue-600 transition text-xs font-medium"
+        >
           Sau ►
         </button>
       </div>
     </div>
 
+    <!-- Sub tabs if any -->
+    <div v-if="subTabs && subTabs.length" class="flex gap-2 mb-4 flex-wrap">
+      <a
+        v-for="tab in subTabs"
+        :key="tab.name"
+        :href="tab.link"
+        class="px-3 py-1 text-xs border border-gray-300 rounded hover:border-blue-500 hover:text-blue-600 transition"
+        >{{ tab.name }}</a
+      >
+    </div>
+
     <!-- Products Grid -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4 mb-6">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-3">
       <div
         v-for="product in products"
         :key="product.id"
-        class="bg-white border border-gray-200 rounded-md overflow-hidden hover:shadow-xl transition-all group"
+        class="bg-white border border-gray-200 rounded overflow-hidden hover:shadow-lg transition-all group"
       >
         <!-- Product Image -->
-        <div class="relative bg-gray-100 h-40 md:h-48 overflow-hidden">
-          <img :src="product.image" :alt="product.name" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
-
-          <!-- Action Overlay -->
-          <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center gap-3">
-            <button class="bg-white text-gray-800 p-2.5 rounded-md hover:bg-blue-500 hover:text-white transition text-lg" title="Print Quote">
+        <div class="relative bg-gray-50 overflow-hidden" style="aspect-ratio: 1">
+          <a :href="product.link || '#'">
+            <img
+              :src="product.image"
+              :alt="product.name"
+              class="w-full h-full object-contain p-2 group-hover:scale-105 transition duration-300"
+            />
+          </a>
+          <!-- Hover overlay -->
+          <div
+            class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center gap-2"
+          >
+            <button
+              class="bg-white text-gray-800 p-2 rounded hover:bg-blue-500 hover:text-white transition text-sm"
+              title="In báo giá"
+            >
               📄
             </button>
-            <button class="bg-white text-gray-800 p-2.5 rounded-md hover:bg-blue-500 hover:text-white transition text-lg" title="Quick View">
+            <button
+              class="bg-white text-gray-800 p-2 rounded hover:bg-blue-500 hover:text-white transition text-sm"
+              title="Xem nhanh"
+            >
               👁️
             </button>
           </div>
         </div>
 
         <!-- Product Info -->
-        <div class="p-3">
-          <h3 class="text-xs md:text-sm font-semibold text-gray-800 line-clamp-3 mb-2 hover:text-blue-600 cursor-pointer transition min-h-8">
-            {{ product.name }}
-          </h3>
+        <div class="p-2.5">
+          <a :href="product.link || '#'" class="block">
+            <h3
+              class="text-xs font-semibold text-gray-800 line-clamp-3 mb-2 hover:text-blue-600 cursor-pointer transition min-h-9"
+            >
+              {{ product.name }}
+            </h3>
+          </a>
 
-          <!-- Info Row -->
-          <div class="flex justify-between items-start gap-1 mb-3 pb-2 border-b border-gray-200 text-xs">
-            <span class="text-gray-500 truncate">{{ product.code }}</span>
-            <span class="font-bold text-gray-800 text-right whitespace-nowrap ml-1">{{ product.price }}</span>
+          <div
+            class="flex justify-between items-center gap-1 mb-2 pb-2 border-b border-gray-100 text-xs"
+          >
+            <span class="text-gray-400 truncate text-xs">{{ product.code }}</span>
+            <span class="font-bold text-gray-800 text-right whitespace-nowrap text-xs">{{
+              product.price
+            }}</span>
           </div>
 
           <!-- Add to Cart -->
           <div v-if="!showQuantity[product.id]">
             <button
-              @click="toggleQuantity(product.id)"
-              class="w-full px-3 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-md hover:from-blue-600 hover:to-blue-700 transition text-xs font-bold shadow-sm hover:shadow-md"
+              @click="addToCart(product.id)"
+              class="w-full py-1.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded hover:from-blue-600 hover:to-blue-700 transition text-xs font-bold flex items-center justify-center gap-1"
             >
-              🛒 Thêm vào giỏ
+              + Thêm
             </button>
           </div>
 
           <!-- Quantity Control -->
-          <div v-else class="flex items-center justify-between gap-1 text-xs">
-            <button class="px-1.5 py-1 border border-gray-300 rounded-sm hover:bg-gray-100 transition font-semibold">−</button>
-            <input type="text" value="1" class="w-7 h-7 text-center border border-gray-300 rounded-sm text-xs font-semibold" />
-            <button class="px-1.5 py-1 border border-gray-300 rounded-sm hover:bg-gray-100 transition font-semibold">+</button>
-            <button class="flex-1 px-2 py-1 bg-blue-500 text-white rounded-sm hover:bg-blue-600 transition font-bold">✓</button>
+          <div v-else class="flex items-center gap-1">
+            <button
+              @click="decrement(product.id)"
+              class="w-7 h-7 border border-gray-300 rounded hover:bg-gray-100 transition font-bold text-sm flex items-center justify-center"
+            >
+              −
+            </button>
+            <input
+              type="text"
+              :value="quantities[product.id] || 1"
+              class="flex-1 h-7 text-center border border-gray-300 rounded text-xs font-semibold"
+              readonly
+            />
+            <button
+              @click="increment(product.id)"
+              class="w-7 h-7 border border-gray-300 rounded hover:bg-gray-100 transition font-bold text-sm flex items-center justify-center"
+            >
+              +
+            </button>
+            <button
+              class="flex-1 h-7 bg-blue-500 text-white rounded hover:bg-blue-600 transition font-bold text-xs"
+            >
+              ✓
+            </button>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- Brand Logos Row (after each section) -->
-    <div class="bg-gray-50 rounded-md p-4 md:p-5 mb-8 border border-gray-200">
-      <div class="text-center text-gray-600 text-xs md:text-sm">
-        <span class="font-semibold">Thương hiệu nổi bật: </span>
-        <span>Ricoh • Toshiba • Canon • Sharp • Fuji-Xerox • Kyocera • HP • Samsung • Epson • Brother • Pantum</span>
       </div>
     </div>
   </div>

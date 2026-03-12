@@ -497,7 +497,7 @@ const vatTuInKim = [
 
       <!-- Product Sections -->
       <div class="bg-white py-5">
-        <div class="mx-auto max-w-screen-xl px-4">
+        <div class="w-full px-2 sm:px-3">
           <ProductCarousel
             title="Máy văn phòng"
             titleLink="https://duclan.vn/may-van-phong-1.cat"

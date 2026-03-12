@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+// import fontawesome icons
 
 interface Product {
   id: number
@@ -17,8 +18,8 @@ defineProps<{
   subTabs?: { name: string; link: string }[]
 }>()
 
-const quantities = ref<{ [key: number]: number }>({})
-const showQuantity = ref<{ [key: number]: boolean }>({})
+const quantities = ref<Record<number, number>>({})
+const showQuantity = ref<Record<number, boolean>>({})
 
 const addToCart = (id: number) => {
   quantities.value[id] = 1
@@ -37,132 +38,97 @@ const decrement = (id: number) => {
 </script>
 
 <template>
-  <div class="mb-10">
-    <!-- Section Title -->
-    <div class="flex items-center justify-between mb-5">
-      <h2 class="text-lg md:text-xl font-bold text-gray-800">
-        <a v-if="titleLink" :href="titleLink" class="hover:text-blue-600 transition">{{ title }}</a>
+  <section class="mb-10 w-full bg-[#f2f3f4] px-1 py-4 sm:px-2 md:px-3">
+    <div class="mb-4 flex items-center justify-between px-1">
+      <h2 class="text-2xl font-bold text-[#4a4a4a]">
+        <a v-if="titleLink" :href="titleLink" class="transition-all hover:text-[#1a8fd1]">{{
+          title
+        }}</a>
         <span v-else>{{ title }}</span>
       </h2>
-      <div class="flex gap-1.5">
-        <button
-          class="px-3 py-1.5 border border-gray-300 rounded hover:border-blue-500 hover:text-blue-600 transition text-xs font-medium"
+      <div v-if="subTabs && subTabs.length" class="flex flex-wrap gap-2">
+        <a
+          v-for="tab in subTabs"
+          :key="tab.name"
+          :href="tab.link"
+          class="rounded-full bg-[#1a8fd1] px-4 py-2 text-sm font-semibold text-white shadow transition-all hover:bg-[#0f75ad]"
         >
-          ◄ Trước
-        </button>
-        <button
-          class="px-3 py-1.5 border border-gray-300 rounded hover:border-blue-500 hover:text-blue-600 transition text-xs font-medium"
-        >
-          Sau ►
-        </button>
+          {{ tab.name }}
+        </a>
       </div>
     </div>
 
-    <!-- Sub tabs if any -->
-    <div v-if="subTabs && subTabs.length" class="flex gap-2 mb-4 flex-wrap">
-      <a
-        v-for="tab in subTabs"
-        :key="tab.name"
-        :href="tab.link"
-        class="px-3 py-1 text-xs border border-gray-300 rounded hover:border-blue-500 hover:text-blue-600 transition"
-        >{{ tab.name }}</a
-      >
-    </div>
-
-    <!-- Products Grid -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-3">
-      <div
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6">
+      <article
         v-for="product in products"
         :key="product.id"
-        class="bg-white border border-gray-200 rounded overflow-hidden hover:shadow-lg transition-all group"
+        class="group relative overflow-hidden rounded-lg border border-gray-300 bg-white transition-all duration-300 hover:-translate-y-[2px] hover:shadow-md"
       >
-        <!-- Product Image -->
-        <div class="relative bg-gray-50 overflow-hidden" style="aspect-ratio: 1">
+        <div
+          class="relative bg-white overflow-hidden [perspective:1000px]"
+          style="aspect-ratio: 1/1"
+        >
           <a :href="product.link || '#'">
             <img
               :src="product.image"
               :alt="product.name"
-              class="w-full h-full object-contain p-2 group-hover:scale-105 transition duration-300"
+              class="h-full w-full object-contain p-6 sm:p-4 transition-all duration-500 group-hover:scale-[1.14]"
             />
           </a>
-          <!-- Hover overlay -->
           <div
-            class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center gap-2"
+            class="absolute bottom-0 left-1/2 z-10 flex h-12 -translate-x-1/2 items-center gap-3 rounded-t-lg bg-[#3b8fbd] px-6 text-white origin-bottom [transform:translateX(-50%)_rotateX(-90deg)] transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)] group-hover:[transform:translateX(-50%)_rotateX(0deg)]"
           >
-            <button
-              class="bg-white text-gray-800 p-2 rounded hover:bg-blue-500 hover:text-white transition text-sm"
-              title="In báo giá"
-            >
-              📄
-            </button>
-            <button
-              class="bg-white text-gray-800 p-2 rounded hover:bg-blue-500 hover:text-white transition text-sm"
-              title="Xem nhanh"
-            >
-              👁️
-            </button>
+            <div class="relative group/icon">
+              <button
+                class="flex h-9 w-9 items-center justify-center rounded-full border border-dashed border-white text-white transition hover:bg-white hover:text-[#3b8fbd]"
+              >
+                <!-- using print svg in asset folder -->
+                <img
+                  src="/src/assets/print-solid-full.svg"
+                  alt="Print"
+                  class="h-4 w-4 color-white"
+                />
+              </button>
+
+              <span
+                class="pointer-events-none absolute bottom-full left-1/2 mb-1 -translate-x-1/2 whitespace-nowrap rounded bg-[#3b8fbd] px-3 py-1 text-xs text-white opacity-0 transition group-hover/icon:opacity-100"
+              >
+                In báo giá
+              </span>
+            </div>
+
+            <div class="relative group/icon">
+              <button
+                class="flex h-9 w-9 items-center justify-center rounded-full border border-dashed border-white text-white transition hover:bg-white hover:text-[#3b8fbd]"
+              >
+                <i class="fa-regular fa-eye text-sm"></i>
+              </button>
+
+              <span
+                class="pointer-events-none absolute bottom-full left-1/2 mb-1 -translate-x-1/2 whitespace-nowrap rounded bg-[#3b8fbd] px-3 py-1 text-xs text-white opacity-0 transition group-hover/icon:opacity-100"
+              >
+                Xem nhanh
+              </span>
+            </div>
           </div>
         </div>
 
-        <!-- Product Info -->
-        <div class="p-2.5">
+        <div class="space-y-2 px-3 pb-4 pt-2">
           <a :href="product.link || '#'" class="block">
             <h3
-              class="text-xs font-semibold text-gray-800 line-clamp-3 mb-2 hover:text-blue-600 cursor-pointer transition min-h-9"
+              class="min-h-[48px] text-[13.5px] font-semibold leading-tight text-[#2f2f2f] transition-all hover:text-[#1a8fd1]"
             >
               {{ product.name }}
             </h3>
           </a>
-
-          <div
-            class="flex justify-between items-center gap-1 mb-2 pb-2 border-b border-gray-100 text-xs"
-          >
-            <span class="text-gray-400 truncate text-xs">{{ product.code }}</span>
-            <span class="font-bold text-gray-800 text-right whitespace-nowrap text-xs">{{
+          <div class="flex items-center justify-between text-[12px]">
+            <span class="truncate text-gray-600">{{ product.code }}</span>
+            <span class="whitespace-nowrap text-[14px] font-bold text-[#d60000]">{{
               product.price
             }}</span>
           </div>
-
-          <!-- Add to Cart -->
-          <div v-if="!showQuantity[product.id]">
-            <button
-              @click="addToCart(product.id)"
-              class="w-full py-1.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded hover:from-blue-600 hover:to-blue-700 transition text-xs font-bold flex items-center justify-center gap-1"
-            >
-              + Thêm
-            </button>
-          </div>
-
-          <!-- Quantity Control -->
-          <div v-else class="flex items-center gap-1">
-            <button
-              @click="decrement(product.id)"
-              class="w-7 h-7 border border-gray-300 rounded hover:bg-gray-100 transition font-bold text-sm flex items-center justify-center"
-            >
-              −
-            </button>
-            <input
-              type="text"
-              :value="quantities[product.id] || 1"
-              class="flex-1 h-7 text-center border border-gray-300 rounded text-xs font-semibold"
-              readonly
-            />
-            <button
-              @click="increment(product.id)"
-              class="w-7 h-7 border border-gray-300 rounded hover:bg-gray-100 transition font-bold text-sm flex items-center justify-center"
-            >
-              +
-            </button>
-            <button
-              class="flex-1 h-7 bg-blue-500 text-white rounded hover:bg-blue-600 transition font-bold text-xs"
-            >
-              ✓
-            </button>
-          </div>
         </div>
-      </div>
+      </article>
     </div>
-  </div>
+  </section>
 </template>
-
-<style scoped></style>

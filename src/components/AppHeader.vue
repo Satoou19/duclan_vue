@@ -90,6 +90,69 @@ const brandList = [
   'Pantum',
 ]
 
+const brandLogos = [
+  {
+    name: 'Ricoh',
+    logo: 'https://admin.duclan.vn/uploads/ckfinder/images/duclan/Home/Logo/Manufacturers/Ricoh.png',
+    link: 'https://duclan.vn/ricoh-3.manu',
+  },
+  {
+    name: 'Toshiba',
+    logo: 'https://admin.duclan.vn/uploads/ckfinder/images/duclan/Home/Logo/Manufacturers/TOSHIBA.png',
+    link: 'https://duclan.vn/toshiba-1.manu',
+  },
+  {
+    name: 'Canon',
+    logo: 'https://admin.duclan.vn/uploads/ckfinder/images/duclan/Home/Logo/Manufacturers/Canon.png',
+    link: 'https://duclan.vn/canon-4.manu',
+  },
+  {
+    name: 'Sharp',
+    logo: 'https://admin.duclan.vn/uploads/ckfinder/images/duclan/Home/Logo/Manufacturers/sharp.png',
+    link: 'https://duclan.vn/sharp-6.manu',
+  },
+  {
+    name: 'Fuji-Xerox',
+    logo: 'https://admin.duclan.vn/uploads/ckfinder/images/duclan/Model/FUJI-XEROX.png',
+    link: 'https://duclan.vn/fuji-xerox-7.manu',
+  },
+  {
+    name: 'Kyocera Mita',
+    logo: 'https://admin.duclan.vn/uploads/ckfinder/images/duclan/Home/Logo/Manufacturers/KYOCERA.png',
+    link: 'https://duclan.vn/kyocera-mita-8.manu',
+  },
+  {
+    name: 'Konica Minolta',
+    logo: 'https://admin.duclan.vn/uploads/ckfinder/images/duclan/Home/Logo/Manufacturers/minolta.png',
+    link: 'https://duclan.vn/konica-minolta-11.manu',
+  },
+  {
+    name: 'HP',
+    logo: 'https://admin.duclan.vn/uploads/ckfinder/images/duclan/Home/Logo/Manufacturers/hp.png',
+    link: 'https://duclan.vn/hp-5.manu',
+  },
+  {
+    name: 'SamSung',
+    logo: 'https://admin.duclan.vn/uploads/ckfinder/images/duclan/Model/SAMSUNG.png',
+    link: 'https://duclan.vn/samsung-13.manu',
+  },
+  {
+    name: 'Epson',
+    logo: 'https://admin.duclan.vn/uploads/ckfinder/images/duclan/Home/Logo/Manufacturers/EPSON.png',
+    link: 'https://duclan.vn/epson-10.manu',
+  },
+  {
+    name: 'Brother',
+    logo: 'https://admin.duclan.vn/uploads/ckfinder/images/duclan/Home/Logo/Manufacturers/Brother.png',
+    link: 'https://duclan.vn/brother-16.manu',
+  },
+  {
+    name: 'Pantum',
+    logo: 'https://admin.duclan.vn/uploads/ckfinder/images/duclan/Model/PANTUM-1.png',
+    link: 'https://duclan.vn/pantum-180.manu',
+  },
+]
+
 const navMenus = [
   {
     label: 'Sản phẩm',
@@ -406,18 +469,36 @@ const closeCategoryPanel = () => {
               />
             </svg>
           </button>
-          <div
-            class="absolute left-0 top-full hidden w-56 rounded-md border border-gray-200 bg-white shadow-lg group-hover:block"
-          >
-            <a
-              v-for="item in menu.items"
-              :key="item.label"
-              :href="item.href"
-              class="block px-4 py-2.5 text-sm text-gray-700 transition hover:bg-gray-100 hover:text-[#1a8fd1]"
+          <template v-if="menu.label === 'Thương hiệu'">
+            <div
+              class="absolute left-0 top-full hidden w-[820px] rounded-md border border-gray-200 bg-white p-4 shadow-lg group-hover:block"
             >
-              {{ item.label }}
-            </a>
-          </div>
+              <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+                <a
+                  v-for="brand in brandLogos"
+                  :key="brand.name"
+                  :href="brand.link"
+                  class="flex items-center justify-center rounded-lg border border-gray-100 bg-white px-4 py-3 transition hover:-translate-y-0.5 hover:border-[#1a8fd1] hover:shadow"
+                >
+                  <img :src="brand.logo" :alt="brand.name" class="max-h-10 object-contain" />
+                </a>
+              </div>
+            </div>
+          </template>
+          <template v-else>
+            <div
+              class="absolute left-0 top-full hidden w-56 rounded-md border border-gray-200 bg-white shadow-lg group-hover:block"
+            >
+              <a
+                v-for="item in menu.items"
+                :key="item.label"
+                :href="item.href"
+                class="block px-4 py-2.5 text-sm text-gray-700 transition hover:bg-gray-100 hover:text-[#1a8fd1]"
+              >
+                {{ item.label }}
+              </a>
+            </div>
+          </template>
         </div>
 
         <a

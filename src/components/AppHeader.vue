@@ -2,11 +2,12 @@
 import { ref } from 'vue'
 
 const isMenuOpen = ref(false)
+const isCategoryOpen = ref(false)
 const cartCount = ref(0)
 const printCount = ref(0)
 const searchQuery = ref('')
 const searchType = ref('product')
-const expandedCategories = ref<{ [key: string]: boolean }>({})
+const expandedCategories = ref<Record<string, boolean>>({})
 
 const categories = [
   {
@@ -74,145 +75,129 @@ const categories = [
   },
 ]
 
+const brandList = [
+  'Ricoh',
+  'Toshiba',
+  'Canon',
+  'Sharp',
+  'Fuji-Xerox',
+  'Kyocera Mita',
+  'Konica-Minolta',
+  'HP',
+  'SamSung',
+  'Epson',
+  'Brother',
+  'Pantum',
+]
+
+const navMenus = [
+  {
+    label: 'Sản phẩm',
+    items: [
+      { label: 'Sản phẩm mới', href: 'https://duclan.vn/san-pham-moi' },
+      { label: 'Sản phẩm nổi bật', href: 'https://duclan.vn/san-pham-noi-bat' },
+    ],
+  },
+  { label: 'Thương hiệu', items: brandList.map((label) => ({ label, href: '#' })) },
+  {
+    label: 'Chính Sách Bán Hàng',
+    items: [
+      { label: 'Tiêu Chí Bán Hàng', href: 'https://duclan.vn/tieu-chi-ban-hang-31.cat.html' },
+      { label: 'Bảo Mật Thông Tin', href: 'https://duclan.vn/bao-mat-thong-tin-34.cat.html' },
+      { label: 'Hệ thống phân phối', href: 'https://duclan.vn/he-thong-phan-phoi-33.cat.html' },
+      { label: 'Chính sách đổi trả', href: 'https://duclan.vn/chinh-sach-doi-tra-32.cat.html' },
+    ],
+  },
+  {
+    label: 'Chính Sách Mua Hàng',
+    items: [
+      { label: 'Hỗ Trợ Khách Hàng', href: 'https://duclan.vn/ho-tro-khach-hang-14.cat.html' },
+      { label: 'Hỗ Trợ Đặt Hàng', href: 'https://duclan.vn/ho-tro-dat-hang-15.cat.html' },
+      { label: 'Bảng Tra Mã Hàng', href: 'https://duclan.vn/bang-tra-ma-hang-27.cat.html' },
+    ],
+  },
+  {
+    label: 'Tin Tức',
+    items: [
+      {
+        label: 'Thông Tin Về Công Nghệ',
+        href: 'https://duclan.vn/thong-tin-ve-cong-nghe-20.cat.html',
+      },
+    ],
+  },
+]
+
+const navLinks = [
+  { label: 'Báo Giá', href: 'https://duclan.vn/bao-gia' },
+  { label: 'Liên hệ', href: '/lien-he' },
+  { label: 'Đội ngũ kinh doanh', href: 'https://duclan.vn/lien-he-kinh-doanh' },
+]
+
 const toggleCategory = (id: string) => {
   expandedCategories.value[id] = !expandedCategories.value[id]
 }
+
 const handleSearch = () => {
   if (searchQuery.value.trim()) console.log('Search:', searchQuery.value)
+}
+
+const toggleCategoryPanel = () => {
+  isCategoryOpen.value = !isCategoryOpen.value
+}
+
+const openCategoryPanel = () => {
+  isCategoryOpen.value = true
+}
+
+const closeCategoryPanel = () => {
+  isCategoryOpen.value = false
 }
 </script>
 
 <template>
-  <div style="width: 100%; background: white; font-family: Arial, sans-serif">
-    <!-- ROW 1: Kính chào + SĐT — nền xanh đậm -->
+  <header class="w-full bg-white text-[14px] text-gray-800">
+    <!-- Row 1 -->
     <div
-      style="
-        background: #1a8fd1;
-        color: white;
-        font-size: 14px;
-        font-weight: 500;
-        padding: 7px 24px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      "
+      class="flex items-center justify-between bg-[#1a8fd1] px-6 py-2 text-sm font-semibold text-white"
     >
       <span>Kính chào quý khách</span>
-      <a href="tel:02839306464" style="color: white; text-decoration: none; font-weight: 600">
-        028.39306464 ( Tổng đài )
-      </a>
+      <a href="tel:02839306464" class="font-bold hover:underline">028.39306464 (Tổng đài)</a>
     </div>
 
-    <!-- ROW 2: Tuyển dụng | Giờ làm | Theo dõi đơn hàng -->
-    <div
-      style="
-        background: white;
-        border-bottom: 1px solid #e0e0e0;
-        font-size: 14px;
-        color: #444;
-        padding: 8px 24px;
-        display: flex;
-        align-items: center;
-        gap: 0;
-      "
-    >
+    <!-- Row 2 -->
+    <div class="flex items-center gap-0 border-b border-gray-200 px-6 py-2 text-sm text-gray-700">
       <a
         href="https://duclan.vn/tuyen-dung-24.cat.html"
-        style="
-          color: #333;
-          text-decoration: none;
-          font-weight: 700;
-          padding-right: 16px;
-          border-right: 1px solid #ccc;
-          margin-right: 16px;
-          white-space: nowrap;
-        "
+        class="mr-4 border-r border-gray-300 pr-4 font-bold text-gray-900 whitespace-nowrap hover:text-[#1a8fd1]"
+        >Thông Tin Tuyển Dụng</a
       >
-        Thông Tin Tuyển Dụng
-      </a>
-      <span style="flex: 1; white-space: nowrap">
+      <span class="flex-1 whitespace-nowrap">
         Thứ 2 đến Thứ 6: 7h45 – 17h30, Thứ 7: 7h45 – 12h5
       </span>
-      <a href="#" style="color: #444; text-decoration: none; white-space: nowrap">
-        Theo dõi trạng thái đơn hàng
-      </a>
+      <a href="#" class="whitespace-nowrap hover:text-[#1a8fd1]">Theo dõi trạng thái đơn hàng</a>
     </div>
 
-    <!-- ROW 3: Logo + Search + Actions -->
-    <div
-      style="
-        background: white;
-        padding: 14px 24px;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        border-bottom: 1px solid #e8e8e8;
-      "
-    >
+    <!-- Row 3 -->
+    <div class="flex items-center gap-4 border-b border-gray-200 px-6 py-4">
       <!-- Logo -->
-      <a
-        href="/"
-        style="
-          text-decoration: none;
-          flex-shrink: 0;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          margin-right: 12px;
-        "
-      >
+      <a href="/" class="flex flex-shrink-0 items-center gap-2 text-[#d32f2f]">
         <div
-          style="
-            background: #d32f2f;
-            color: white;
-            font-size: 28px;
-            font-weight: 900;
-            width: 46px;
-            height: 46px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 4px;
-            font-family: Georgia, 'Times New Roman', serif;
-            flex-shrink: 0;
-          "
+          class="flex h-12 w-12 items-center justify-center rounded-md bg-[#d32f2f] text-2xl font-black text-white"
         >
           M
         </div>
-        <span
-          style="
-            color: #d32f2f;
-            font-size: 32px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            white-space: nowrap;
-          "
-          >ĐỨC LAN</span
-        >
+        <span class="text-[32px] font-black tracking-[0.12em] whitespace-nowrap">ĐỨC LAN</span>
       </a>
 
-      <!-- Danh mục sản phẩm button -->
-      <div style="position: relative; flex-shrink: 0" class="cat-wrap">
+      <!-- Category button -->
+      <div
+        class="relative hidden flex-shrink-0 md:block"
+        @mouseenter="openCategoryPanel"
+        @mouseleave="closeCategoryPanel"
+      >
         <button
-          class="cat-btn"
-          style="
-            border: 2px solid #1a8fd1;
-            color: #1a8fd1;
-            background: white;
-            border-radius: 6px;
-            padding: 10px 18px;
-            font-size: 15px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            height: 54px;
-            min-width: 190px;
-            line-height: 1.35;
-            text-align: left;
-            white-space: nowrap;
-          "
+          class="flex h-[54px] min-w-[190px] items-center gap-3 rounded-md border-2 border-[#1a8fd1] px-4 text-left text-[15px] font-bold text-[#1a8fd1] leading-tight shadow-sm transition hover:bg-[#e8f4fd]"
+          @click="toggleCategoryPanel"
         >
           <svg
             width="20"
@@ -227,61 +212,30 @@ const handleSearch = () => {
           <span>Danh mục sản<br />phẩm</span>
         </button>
 
-        <!-- Dropdown menu -->
         <div
-          class="cat-dropdown"
-          style="
-            position: absolute;
-            left: 0;
-            top: 100%;
-            z-index: 1000;
-            width: 280px;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-            display: none;
-          "
+          v-show="isCategoryOpen"
+          class="absolute left-0 top-full z-40 mt-2 w-72 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-xl"
         >
-          <div v-for="cat in categories" :key="cat.id" style="border-bottom: 1px solid #f0f0f0">
+          <div
+            v-for="cat in categories"
+            :key="cat.id"
+            class="border-b border-gray-100 last:border-b-0"
+          >
             <button
               @click="toggleCategory(cat.id)"
-              style="
-                width: 100%;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 11px 16px;
-                font-size: 14px;
-                font-weight: 700;
-                color: #333;
-                background: none;
-                border: none;
-                cursor: pointer;
-                text-align: left;
-              "
-              onmouseover="this.style.background='#e8f4fd'; this.style.color='#1a8fd1'"
-              onmouseout="this.style.background='white'; this.style.color='#333'"
+              class="flex w-full items-center justify-between px-4 py-3 text-left text-[14px] font-semibold text-gray-800 transition hover:bg-[#e8f4fd] hover:text-[#1a8fd1]"
             >
               <span>{{ cat.name }}</span>
-              <span style="font-size: 18px; color: #aaa; font-weight: 400">
+              <span class="text-lg font-normal text-gray-400">
                 {{ expandedCategories[cat.id] ? '−' : '+' }}
               </span>
             </button>
-            <div v-if="expandedCategories[cat.id]" style="background: #f8f8f8">
+            <div v-if="expandedCategories[cat.id]" class="bg-gray-50">
               <a
                 v-for="sub in cat.subcategories"
                 :key="sub.name"
                 :href="sub.link"
-                style="
-                  display: block;
-                  padding: 8px 30px;
-                  font-size: 13.5px;
-                  color: #555;
-                  text-decoration: none;
-                "
-                onmouseover="this.style.color='#1a8fd1'; this.style.background='white'"
-                onmouseout="this.style.color='#555'; this.style.background='transparent'"
+                class="block px-6 py-2.5 text-[13.5px] text-gray-600 transition hover:bg-white hover:text-[#1a8fd1]"
                 >{{ sub.name }}</a
               >
             </div>
@@ -289,40 +243,23 @@ const handleSearch = () => {
         </div>
       </div>
 
-      <!-- Search bar -->
-      <div style="flex: 1; display: flex; height: 54px; max-width: 540px">
-        <div style="position: relative; flex-shrink: 0">
+      <!-- Search -->
+      <div
+        class="flex flex-1 items-stretch overflow-hidden rounded-md border border-gray-300 shadow-sm max-w-[540px] h-[54px]"
+      >
+        <div class="relative">
           <select
             v-model="searchType"
-            style="
-              border: 1px solid #ccc;
-              border-right: none;
-              border-radius: 6px 0 0 6px;
-              height: 54px;
-              padding: 0 36px 0 14px;
-              font-size: 15px;
-              color: #444;
-              background: white;
-              cursor: pointer;
-              appearance: none;
-              -webkit-appearance: none;
-              min-width: 150px;
-            "
+            class="h-full min-w-[150px] appearance-none bg-white px-3 pr-9 text-[15px] text-gray-700 outline-none focus:border-[#1a8fd1] focus:ring-1 focus:ring-[#1a8fd1]"
           >
-            <option value="product">Tim sản phẩm</option>
+            <option value="product">Tìm sản phẩm</option>
             <option value="machine">Tìm mã máy</option>
           </select>
           <svg
-            style="
-              position: absolute;
-              right: 10px;
-              top: 50%;
-              transform: translateY(-50%);
-              pointer-events: none;
-            "
+            class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
             width="13"
             height="13"
-            fill="#888"
+            fill="currentColor"
             viewBox="0 0 20 20"
           >
             <path
@@ -335,42 +272,18 @@ const handleSearch = () => {
           @keyup.enter="handleSearch"
           type="text"
           placeholder="Nhập sản phẩm cần tìm kiếm..."
-          style="
-            flex: 1;
-            border: 1px solid #ccc;
-            border-right: none;
-            height: 54px;
-            padding: 0 14px;
-            font-size: 15px;
-            outline: none;
-          "
+          class="flex-1 border-l border-gray-200 px-3 text-[15px] outline-none focus:border-l-[#1a8fd1] focus:ring-0"
         />
         <button
           @click="handleSearch"
-          style="
-            background: #1a8fd1;
-            color: white;
-            border: none;
-            border-radius: 0 6px 6px 0;
-            height: 54px;
-            padding: 0 28px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
-          "
-          onmouseover="this.style.background='#1565c0'"
-          onmouseout="this.style.background='#1a8fd1'"
+          class="flex items-center gap-2 bg-[#1a8fd1] px-7 text-[15px] font-bold text-white transition hover:bg-[#1565c0]"
         >
           Tìm
           <svg
             width="18"
             height="18"
             fill="none"
-            stroke="white"
+            stroke="currentColor"
             stroke-width="2.5"
             viewBox="0 0 24 24"
           >
@@ -380,26 +293,11 @@ const handleSearch = () => {
         </button>
       </div>
 
-      <!-- Right actions: Tài khoản | In báo giá | Giỏ hàng -->
-      <div style="display: flex; align-items: center; gap: 8px; margin-left: auto; flex-shrink: 0">
-        <!-- Tài khoản -->
+      <!-- Actions -->
+      <div class="ml-auto flex flex-wrap items-center gap-2 md:flex-nowrap md:gap-2">
         <a
           href="https://duclan.vn/dang-nhap"
-          style="
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #333;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 600;
-            padding: 10px 16px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            white-space: nowrap;
-          "
-          onmouseover="this.style.background='#f5f5f5'"
-          onmouseout="this.style.background='white'"
+          class="flex items-center gap-2 rounded-md border border-gray-300 px-4 py-2.5 font-semibold text-gray-800 transition hover:bg-gray-50"
         >
           <svg
             width="20"
@@ -415,27 +313,11 @@ const handleSearch = () => {
           Tài khoản
         </a>
 
-        <!-- In báo giá -->
         <a
           href="https://duclan.vn/xem-bao-gia"
-          style="
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #333;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 600;
-            padding: 10px 16px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            position: relative;
-            white-space: nowrap;
-          "
-          onmouseover="this.style.background='#f5f5f5'"
-          onmouseout="this.style.background='white'"
+          class="relative flex items-center gap-2 rounded-md border border-gray-300 px-4 py-2.5 font-semibold text-gray-800 transition hover:bg-gray-50"
         >
-          <div style="position: relative">
+          <div class="relative">
             <svg
               width="20"
               height="20"
@@ -449,48 +331,17 @@ const handleSearch = () => {
               <rect x="6" y="14" width="12" height="8" />
             </svg>
             <span
-              style="
-                position: absolute;
-                top: -9px;
-                right: -9px;
-                background: #1a8fd1;
-                color: white;
-                border-radius: 50%;
-                width: 18px;
-                height: 18px;
-                font-size: 11px;
-                font-weight: 800;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-              "
+              class="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#1a8fd1] text-[11px] font-extrabold text-white"
               >{{ printCount }}</span
             >
           </div>
           In báo giá
         </a>
 
-        <!-- Giỏ hàng -->
         <button
-          style="
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #333;
-            background: white;
-            font-size: 15px;
-            font-weight: 600;
-            padding: 10px 16px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            cursor: pointer;
-            white-space: nowrap;
-            position: relative;
-          "
-          onmouseover="this.style.background='#f5f5f5'"
-          onmouseout="this.style.background='white'"
+          class="relative flex items-center gap-2 rounded-md border border-gray-300 px-4 py-2.5 font-semibold text-gray-800 transition hover:bg-gray-50"
         >
-          <div style="position: relative">
+          <div class="relative">
             <svg
               width="20"
               height="20"
@@ -504,38 +355,17 @@ const handleSearch = () => {
               <path d="M16 10a4 4 0 01-8 0" />
             </svg>
             <span
-              style="
-                position: absolute;
-                top: -9px;
-                right: -9px;
-                background: #1a8fd1;
-                color: white;
-                border-radius: 50%;
-                width: 18px;
-                height: 18px;
-                font-size: 11px;
-                font-weight: 800;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-              "
+              class="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#1a8fd1] text-[11px] font-extrabold text-white"
               >{{ cartCount }}</span
             >
           </div>
           Giỏ hàng
         </button>
 
-        <!-- Mobile toggle -->
         <button
           @click="isMenuOpen = !isMenuOpen"
-          class="md:hidden"
-          style="
-            padding: 10px;
-            background: none;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            cursor: pointer;
-          "
+          class="ml-1 inline-flex items-center rounded-md border border-gray-300 p-2.5 text-gray-700 md:hidden"
+          aria-label="Mở menu"
         >
           <svg
             width="22"
@@ -551,31 +381,12 @@ const handleSearch = () => {
       </div>
     </div>
 
-    <!-- NAV BAR -->
-    <nav
-      style="
-        background: #eeeeee;
-        border-bottom: 1px solid #ddd;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        /* always on top */
-      "
-    >
-      <div style="padding: 0 24px; display: flex; align-items: center">
-        <!-- Home icon -->
+    <!-- Nav -->
+    <nav class="sticky top-0 z-30 border-y border-gray-300 bg-[#eeeeee]">
+      <div class="flex items-center px-6">
         <router-link
           to="/"
-          style="
-            padding: 14px 14px;
-            display: flex;
-            align-items: center;
-            color: #333;
-            text-decoration: none;
-            flex-shrink: 0;
-          "
-          onmouseover="this.style.color='#1a8fd1'"
-          onmouseout="this.style.color='#333'"
+          class="flex flex-shrink-0 items-center px-3 py-3 text-gray-800 transition hover:text-[#1a8fd1]"
         >
           <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
             <path
@@ -584,25 +395,11 @@ const handleSearch = () => {
           </svg>
         </router-link>
 
-        <!-- Sản phẩm -->
-        <div style="position: relative" class="nav-item">
+        <div v-for="menu in navMenus" :key="menu.label" class="group relative">
           <button
-            class="nav-btn"
-            style="
-              padding: 14px 16px;
-              background: none;
-              border: none;
-              cursor: pointer;
-              font-size: 15px;
-              font-weight: 700;
-              color: #333;
-              display: flex;
-              align-items: center;
-              gap: 5px;
-              white-space: nowrap;
-            "
+            class="flex items-center gap-1 px-4 py-3 text-[15px] font-bold text-gray-900 transition hover:text-[#1a8fd1]"
           >
-            Sản phẩm
+            {{ menu.label }}
             <svg width="11" height="11" fill="#666" viewBox="0 0 20 20">
               <path
                 d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -610,331 +407,38 @@ const handleSearch = () => {
             </svg>
           </button>
           <div
-            class="nav-dropdown"
-            style="
-              position: absolute;
-              left: 0;
-              top: 100%;
-              width: 210px;
-              background: white;
-              border: 1px solid #ddd;
-              border-radius: 4px;
-              box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-              z-index: 999;
-              display: none;
-            "
-          >
-            <a href="https://duclan.vn/san-pham-moi" class="nav-dd-item">Sản phẩm mới</a>
-            <a href="https://duclan.vn/san-pham-noi-bat" class="nav-dd-item">Sản phẩm nổi bật</a>
-          </div>
-        </div>
-
-        <!-- Thương hiệu -->
-        <div style="position: relative" class="nav-item">
-          <button
-            class="nav-btn"
-            style="
-              padding: 14px 16px;
-              background: none;
-              border: none;
-              cursor: pointer;
-              font-size: 15px;
-              font-weight: 700;
-              color: #333;
-              display: flex;
-              align-items: center;
-              gap: 5px;
-              white-space: nowrap;
-            "
-          >
-            Thương hiệu
-            <svg width="11" height="11" fill="#666" viewBox="0 0 20 20">
-              <path
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              />
-            </svg>
-          </button>
-          <div
-            class="nav-dropdown"
-            style="
-              position: absolute;
-              left: 0;
-              top: 100%;
-              width: 210px;
-              background: white;
-              border: 1px solid #ddd;
-              border-radius: 4px;
-              box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-              z-index: 999;
-              display: none;
-            "
+            class="absolute left-0 top-full hidden w-56 rounded-md border border-gray-200 bg-white shadow-lg group-hover:block"
           >
             <a
-              v-for="b in [
-                'Ricoh',
-                'Toshiba',
-                'Canon',
-                'Sharp',
-                'Fuji-Xerox',
-                'Kyocera Mita',
-                'Konica-Minolta',
-                'HP',
-                'SamSung',
-                'Epson',
-                'Brother',
-                'Pantum',
-              ]"
-              :key="b"
-              href="#"
-              class="nav-dd-item"
-              >{{ b }}</a
+              v-for="item in menu.items"
+              :key="item.label"
+              :href="item.href"
+              class="block px-4 py-2.5 text-sm text-gray-700 transition hover:bg-gray-100 hover:text-[#1a8fd1]"
             >
-          </div>
-        </div>
-
-        <!-- Chính Sách Bán Hàng -->
-        <div style="position: relative" class="nav-item">
-          <button
-            class="nav-btn"
-            style="
-              padding: 14px 16px;
-              background: none;
-              border: none;
-              cursor: pointer;
-              font-size: 15px;
-              font-weight: 700;
-              color: #333;
-              display: flex;
-              align-items: center;
-              gap: 5px;
-              white-space: nowrap;
-            "
-          >
-            Chính Sách Bán Hàng
-            <svg width="11" height="11" fill="#666" viewBox="0 0 20 20">
-              <path
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              />
-            </svg>
-          </button>
-          <div
-            class="nav-dropdown"
-            style="
-              position: absolute;
-              left: 0;
-              top: 100%;
-              width: 220px;
-              background: white;
-              border: 1px solid #ddd;
-              border-radius: 4px;
-              box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-              z-index: 999;
-              display: none;
-            "
-          >
-            <a href="https://duclan.vn/tieu-chi-ban-hang-31.cat.html" class="nav-dd-item"
-              >Tiêu Chí Bán Hàng</a
-            >
-            <a href="https://duclan.vn/bao-mat-thong-tin-34.cat.html" class="nav-dd-item"
-              >Bảo Mật Thông Tin</a
-            >
-            <a href="https://duclan.vn/he-thong-phan-phoi-33.cat.html" class="nav-dd-item"
-              >Hệ thống phân phối</a
-            >
-            <a href="https://duclan.vn/chinh-sach-doi-tra-32.cat.html" class="nav-dd-item"
-              >Chính sách đổi trả</a
-            >
-          </div>
-        </div>
-
-        <!-- Chính Sách Mua Hàng -->
-        <div style="position: relative" class="nav-item">
-          <button
-            class="nav-btn"
-            style="
-              padding: 14px 16px;
-              background: none;
-              border: none;
-              cursor: pointer;
-              font-size: 15px;
-              font-weight: 700;
-              color: #333;
-              display: flex;
-              align-items: center;
-              gap: 5px;
-              white-space: nowrap;
-            "
-          >
-            Chính Sách Mua Hàng
-            <svg width="11" height="11" fill="#666" viewBox="0 0 20 20">
-              <path
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              />
-            </svg>
-          </button>
-          <div
-            class="nav-dropdown"
-            style="
-              position: absolute;
-              left: 0;
-              top: 100%;
-              width: 220px;
-              background: white;
-              border: 1px solid #ddd;
-              border-radius: 4px;
-              box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-              z-index: 999;
-              display: none;
-            "
-          >
-            <a href="https://duclan.vn/ho-tro-khach-hang-14.cat.html" class="nav-dd-item"
-              >Hỗ Trợ Khách Hàng</a
-            >
-            <a href="https://duclan.vn/ho-tro-dat-hang-15.cat.html" class="nav-dd-item"
-              >Hỗ Trợ Đặt Hàng</a
-            >
-            <a href="https://duclan.vn/bang-tra-ma-hang-27.cat.html" class="nav-dd-item"
-              >Bảng Tra Mã Hàng</a
-            >
-          </div>
-        </div>
-
-        <!-- Tin Tức -->
-        <div style="position: relative" class="nav-item">
-          <button
-            class="nav-btn"
-            style="
-              padding: 14px 16px;
-              background: none;
-              border: none;
-              cursor: pointer;
-              font-size: 15px;
-              font-weight: 700;
-              color: #333;
-              display: flex;
-              align-items: center;
-              gap: 5px;
-              white-space: nowrap;
-            "
-          >
-            Tin Tức
-            <svg width="11" height="11" fill="#666" viewBox="0 0 20 20">
-              <path
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              />
-            </svg>
-          </button>
-          <div
-            class="nav-dropdown"
-            style="
-              position: absolute;
-              left: 0;
-              top: 100%;
-              width: 220px;
-              background: white;
-              border: 1px solid #ddd;
-              border-radius: 4px;
-              box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-              z-index: 999;
-              display: none;
-            "
-          >
-            <a href="https://duclan.vn/thong-tin-ve-cong-nghe-20.cat.html" class="nav-dd-item"
-              >Thông Tin Về Công Nghệ</a
-            >
+              {{ item.label }}
+            </a>
           </div>
         </div>
 
         <a
-          href="https://duclan.vn/bao-gia"
-          class="nav-link"
-          style="
-            padding: 14px 16px;
-            color: #333;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 700;
-            white-space: nowrap;
-          "
-          >Báo Giá</a
-        >
-        <a
-          href="/lien-he"
-          class="nav-link"
-          style="
-            padding: 14px 16px;
-            color: #333;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 700;
-            white-space: nowrap;
-          "
-          >Liên hệ</a
-        >
-        <a
-          href="https://duclan.vn/lien-he-kinh-doanh"
-          class="nav-link"
-          style="
-            padding: 14px 16px;
-            color: #333;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 700;
-            white-space: nowrap;
-          "
-          >Đội ngũ kinh doanh</a
+          v-for="link in navLinks"
+          :key="link.label"
+          :href="link.href"
+          class="px-4 py-3 text-[15px] font-bold text-gray-900 whitespace-nowrap transition hover:text-[#1a8fd1]"
+          >{{ link.label }}</a
         >
 
-        <!-- Khuyến mãi badge: "Giảm tận 30%" + "Khuyến mãi" — cuối nav, y chang ảnh -->
-        <div style="margin-left: auto; flex-shrink: 0; display: flex; height: 100%">
-          <a
-            href="#"
-            style="display: flex; align-items: center; text-decoration: none; height: 50px"
+        <div class="ml-auto flex h-[50px] flex-shrink-0">
+          <div
+            class="flex items-center rounded-l-md bg-[#1565c0] px-5 text-sm font-extrabold uppercase text-white"
           >
-            <!-- Phần "Giảm tận 30%" — xanh đậm + arrow phải -->
-            <div
-              style="
-                background: #1565c0;
-                color: white;
-                font-size: 14px;
-                font-weight: 800;
-                padding: 0 20px 0 20px;
-                height: 50px;
-                display: flex;
-                align-items: center;
-                white-space: nowrap;
-                clip-path: polygon(
-                  0 0,
-                  calc(100% - 12px) 0,
-                  100% 50%,
-                  calc(100% - 12px) 100%,
-                  0 100%
-                );
-                padding-right: 28px;
-              "
-            >
-              Giảm tận 30%
-            </div>
-            <!-- Phần "Khuyến mãi" — xanh nhạt + arrow trái -->
-            <div
-              style="
-                background: #1a8fd1;
-                color: white;
-                font-size: 14px;
-                font-weight: 800;
-                padding: 0 20px;
-                height: 50px;
-                display: flex;
-                align-items: center;
-                white-space: nowrap;
-                clip-path: polygon(12px 0, 100% 0, 100% 100%, 12px 100%, 0 50%);
-                margin-left: -2px;
-                padding-left: 22px;
-              "
-            >
-              Khuyến mãi
-            </div>
-          </a>
+            Giảm tận 30%
+          </div>
+          <div
+            class="-ml-1 flex items-center rounded-r-md bg-[#1a8fd1] px-5 text-sm font-extrabold uppercase text-white"
+          >
+            Khuyến mãi
+          </div>
         </div>
       </div>
     </nav>
@@ -942,107 +446,36 @@ const handleSearch = () => {
     <!-- Mobile Menu -->
     <div
       v-show="isMenuOpen"
-      style="background: white; border-top: 1px solid #eee; max-height: 350px; overflow-y: auto"
+      class="md:hidden max-h-[350px] overflow-y-auto border-t border-gray-200 bg-white"
     >
-      <div style="padding: 8px 16px">
+      <div class="px-4 py-2">
         <router-link
           to="/"
           @click="isMenuOpen = false"
-          style="
-            display: block;
-            padding: 12px 8px;
-            color: #333;
-            text-decoration: none;
-            font-size: 15px;
-            border-bottom: 1px solid #f5f5f5;
-          "
+          class="block border-b border-gray-100 px-2 py-3 text-[15px] text-gray-800 hover:text-[#1a8fd1]"
           >🏠 Trang chủ</router-link
         >
         <a
           href="https://duclan.vn/san-pham-moi"
-          style="
-            display: block;
-            padding: 12px 8px;
-            color: #333;
-            text-decoration: none;
-            font-size: 15px;
-            border-bottom: 1px solid #f5f5f5;
-          "
+          class="block border-b border-gray-100 px-2 py-3 text-[15px] text-gray-800 hover:text-[#1a8fd1]"
           >Sản phẩm mới</a
         >
         <a
           href="https://duclan.vn/san-pham-noi-bat"
-          style="
-            display: block;
-            padding: 12px 8px;
-            color: #333;
-            text-decoration: none;
-            font-size: 15px;
-            border-bottom: 1px solid #f5f5f5;
-          "
+          class="block border-b border-gray-100 px-2 py-3 text-[15px] text-gray-800 hover:text-[#1a8fd1]"
           >Sản phẩm nổi bật</a
         >
         <a
           href="https://duclan.vn/bao-gia"
-          style="
-            display: block;
-            padding: 12px 8px;
-            color: #333;
-            text-decoration: none;
-            font-size: 15px;
-            border-bottom: 1px solid #f5f5f5;
-          "
+          class="block border-b border-gray-100 px-2 py-3 text-[15px] text-gray-800 hover:text-[#1a8fd1]"
           >Báo giá</a
         >
         <a
           href="/lien-he"
-          style="
-            display: block;
-            padding: 12px 8px;
-            color: #333;
-            text-decoration: none;
-            font-size: 15px;
-            border-bottom: 1px solid #f5f5f5;
-          "
+          class="block border-b border-gray-100 px-2 py-3 text-[15px] text-gray-800 hover:text-[#1a8fd1]"
           >Liên hệ</a
         >
       </div>
     </div>
-  </div>
+  </header>
 </template>
-
-<style scoped>
-/* Cat dropdown hiện khi hover nút */
-.cat-wrap:hover .cat-dropdown {
-  display: block !important;
-}
-.cat-wrap:hover .cat-btn {
-  color: #1a8fd1 !important;
-}
-
-/* Nav dropdown hiện khi hover */
-.nav-item:hover .nav-dropdown {
-  display: block !important;
-}
-.nav-item:hover .nav-btn {
-  color: #1a8fd1 !important;
-}
-
-/* Link thường trong nav */
-.nav-link:hover {
-  color: #1a8fd1 !important;
-}
-
-/* Items trong dropdown */
-.nav-dd-item {
-  display: block;
-  padding: 10px 18px;
-  font-size: 14px;
-  color: #333;
-  text-decoration: none;
-}
-.nav-dd-item:hover {
-  background: #f0f0f0;
-  color: #1a8fd1;
-}
-</style>

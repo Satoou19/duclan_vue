@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
 const brands = [
   {
     name: 'Ricoh',
@@ -61,35 +63,24 @@ const brands = [
     link: 'https://duclan.vn/pantum-180.manu',
   },
 ]
+
+const brokenLogos = ref<string[]>([])
+
+const handleLogoError = (event: Event, brand: { name: string }) => {
+  const img = event.target as HTMLImageElement | null
+  if (!img) return
+
+  if (!brokenLogos.value.includes(brand.name)) {
+    brokenLogos.value.push(brand.name)
+  }
+}
 </script>
 
 <template>
-  <div style="background: white; padding: 20px 24px 24px">
-    <div style="display: flex; gap: 20px; align-items: flex-start">
-      <!-- ===== LEFT: Tìm theo máy ===== -->
-      <div
-        style="
-          width: 260px;
-          flex-shrink: 0;
-          border: 1px solid #e0e0e0;
-          border-radius: 8px;
-          padding: 18px 16px 20px;
-          background: white;
-        "
-      >
-        <!-- Title -->
-        <div
-          style="
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 16px;
-            color: #d32f2f;
-            font-size: 15px;
-            font-weight: 800;
-          "
-        >
-          <!-- Printer icon -->
+  <div class="bg-white p-5">
+    <div class="flex flex-wrap gap-5">
+      <aside class="w-full md:w-64 flex-shrink-0 border border-gray-200 rounded-xl p-4 bg-white">
+        <div class="flex items-center gap-2 mb-4 text-red-700 text-base font-bold">
           <svg
             width="20"
             height="20"
@@ -102,26 +93,14 @@ const brands = [
             <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2" />
             <rect x="6" y="14" width="12" height="8" />
           </svg>
-          Tìm theo máy
+          <span>Tìm theo máy</span>
         </div>
 
-        <!-- Select 1: Thương hiệu -->
-        <div style="position: relative; margin-bottom: 12px">
+        <div class="relative mb-3">
           <select
-            style="
-              width: 100%;
-              border: 1px solid #ccc;
-              border-radius: 4px;
-              padding: 10px 32px 10px 12px;
-              font-size: 14px;
-              color: #555;
-              background: white;
-              cursor: pointer;
-              appearance: none;
-              -webkit-appearance: none;
-            "
+            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 appearance-none pr-8"
           >
-            <option>-- Chọn thương hiệu --</option>
+            <option>-- Chọn thương hiệu--</option>
             <option>Ricoh</option>
             <option>Toshiba</option>
             <option>Canon</option>
@@ -136,13 +115,7 @@ const brands = [
             <option>Pantum</option>
           </select>
           <svg
-            style="
-              position: absolute;
-              right: 10px;
-              top: 50%;
-              transform: translateY(-50%);
-              pointer-events: none;
-            "
+            class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500"
             width="12"
             height="12"
             fill="#888"
@@ -154,32 +127,14 @@ const brands = [
           </svg>
         </div>
 
-        <!-- Select 2: Phần tử -->
-        <div style="position: relative; margin-bottom: 12px">
+        <div class="relative mb-3">
           <select
-            style="
-              width: 100%;
-              border: 1px solid #ccc;
-              border-radius: 4px;
-              padding: 10px 32px 10px 12px;
-              font-size: 14px;
-              color: #555;
-              background: white;
-              cursor: pointer;
-              appearance: none;
-              -webkit-appearance: none;
-            "
+            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 appearance-none pr-8"
           >
             <option>-- Chọn phần tử --</option>
           </select>
           <svg
-            style="
-              position: absolute;
-              right: 10px;
-              top: 50%;
-              transform: translateY(-50%);
-              pointer-events: none;
-            "
+            class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500"
             width="12"
             height="12"
             fill="#888"
@@ -191,32 +146,14 @@ const brands = [
           </svg>
         </div>
 
-        <!-- Select 3: Phần tử -->
-        <div style="position: relative; margin-bottom: 16px">
+        <div class="relative mb-4">
           <select
-            style="
-              width: 100%;
-              border: 1px solid #ccc;
-              border-radius: 4px;
-              padding: 10px 32px 10px 12px;
-              font-size: 14px;
-              color: #555;
-              background: white;
-              cursor: pointer;
-              appearance: none;
-              -webkit-appearance: none;
-            "
+            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 appearance-none pr-8"
           >
             <option>-- Chọn phần tử --</option>
           </select>
           <svg
-            style="
-              position: absolute;
-              right: 10px;
-              top: 50%;
-              transform: translateY(-50%);
-              pointer-events: none;
-            "
+            class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500"
             width="12"
             height="12"
             fill="#888"
@@ -228,62 +165,37 @@ const brands = [
           </svg>
         </div>
 
-        <!-- Tìm kiếm button -->
         <button
-          style="
-            width: 100%;
-            background: #1a8fd1;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 12px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-          "
-          onmouseover="this.style.background='#1565c0'"
-          onmouseout="this.style.background='#1a8fd1'"
+          class="w-full bg-[#1a8fd1] hover:bg-[#1565c0] text-white font-bold rounded-md py-2 transition"
         >
           Tìm kiếm
         </button>
-      </div>
+      </aside>
 
-      <!-- ===== RIGHT: Brand logos grid ===== -->
-      <div style="flex: 1">
-        <!--
-          Layout y chang ảnh:
-          Row 1: 5 logo (Ricoh, Toshiba, Canon, Sharp, Fuji-Xerox)
-          Row 2: 5 logo (Kyocera, Konica, HP, Samsung, Epson)
-          Row 3: 2 logo (Brother, Pantum)
-        -->
-        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px">
+      <div class="flex-1">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
           <a
             v-for="brand in brands"
             :key="brand.name"
             :href="brand.link"
-            style="
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              border: 1px solid #e0e0e0;
-              border-radius: 6px;
-              padding: 18px 12px;
-              background: white;
-              transition: border-color 0.15s;
-              min-height: 80px;
-            "
-            onmouseover="this.style.borderColor='#1a8fd1'; this.style.boxShadow='0 2px 10px rgba(26,143,209,0.18)'"
-            onmouseout="this.style.borderColor='#e0e0e0'; this.style.boxShadow='none'"
+            class="flex items-center justify-center border border-gray-200 rounded-lg p-4 bg-white transition hover:border-[#1a8fd1] hover:shadow-lg"
           >
-            <img
-              :src="brand.logo"
-              :alt="brand.name"
-              style="max-height: 44px; max-width: 100%; object-fit: contain"
-              onerror="this.style.display='none'; this.parentElement.innerHTML += '<span style=&quot;font-size:13px;font-weight:700;color:#555;&quot;>' + this.alt + '</span>'"
-            />
+            <template v-if="!brokenLogos.includes(brand.name)">
+              <img
+                :src="brand.logo"
+                :alt="brand.name"
+                class="max-h-12 max-w-full object-contain"
+                @error="(event) => handleLogoError(event, brand)"
+              />
+            </template>
+            <template v-else>
+              <span class="text-sm font-bold text-gray-600">{{ brand.name }}</span>
+            </template>
           </a>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped></style>
